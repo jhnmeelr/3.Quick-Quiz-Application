@@ -1,8 +1,16 @@
 import React, {Component} from 'react';
 
 class Question extends Component {
-    onChange(){
-        return;
+    onChange(e){
+        e.preventDefault();
+        const {setCurrent, setScore, question} = this.props;
+
+        let selected = e.target.value;
+        if (selected == question.correct) {
+            setScore(this.props.score+1);
+        }
+
+        setCurrent(this.props.current+1);
     }
     render(){
         const {question} = this.props;
@@ -15,7 +23,7 @@ class Question extends Component {
                         this.props.question.choices.map(choice => {
                             return (
                                 <li className="list-group-item" key={choice.id} >
-                                    <input type="radio" onChange={this.onChange.bind(this)} name={question.name} value={question.id} /> {choice.id}: {choice.text}
+                                    <input type="radio" onChange={this.onChange.bind(this)} value={choice.id} /> {choice.id}: {choice.text}
                                 </li>
                             )
                         })
